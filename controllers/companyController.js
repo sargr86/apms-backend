@@ -9,19 +9,6 @@ const {validationResult} = require('express-validator');
 
 
 
-// module.exports.getAll = (req,res)=>{
-//     Post.find({})
-//         .then(result => {
-//             res.status(200).json({
-//                 success: true,
-//                 posts: result
-//             })
-//         })
-//         .catch(err => res.status(500).json({
-//             error: err
-//         }));
-// }
-
 
 
 //CREATE
@@ -50,33 +37,7 @@ module.exports.getAll = async (req,res)=>{
         })
     }
 };
-// module.exports.getAll = async (res, res)=>{
-//     try {
-//         let post = await  Post.find({});
-//         res.status(200).json({
-//             success: true,
-//             posts: post
-//         })
-//     }
-//     catch (e) {
-//         res.status(500).json({
-//             error: e
-//         })
-//     }
-// };module.exports.getAll = async (res, res)=>{
-//     try {
-//         let post = await  Post.find({});
-//         res.status(200).json({
-//             success: true,
-//             posts: post
-//         })
-//     }
-//     catch (e) {
-//         res.status(500).json({
-//             error: e
-//         })
-//     }
-// };
+
 
 module.exports.create = async (req,res) => {
 
