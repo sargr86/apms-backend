@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const CompanySchema = new Schema({
     companyName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     number: {
         type: Number,

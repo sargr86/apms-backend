@@ -19,5 +19,18 @@
     "path": "^0.12.7",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
-  }
+  },
+  "main": "main.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sargr86/apms-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sargr86/apms-backend/issues"
+  },
+  "homepage": "https://github.com/sargr86/apms-backend#readme",
+  "description": ""
 }
