@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Routes
 app.use('/auth', require('./routes/auth'));
 app.use('/company', require('./routes/company'));
+app.use('/users', require('./routes/users'));
+app.use('/roles', require('./routes/roles'));
 
 
 const mongoose = require('mongoose');

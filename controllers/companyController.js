@@ -23,6 +23,29 @@ const {validationResult} = require('express-validator');
 //     res.status(201).json(company);
 // }
 
+
+
+
+
+//getOne
+module.exports.getOne = async (req, res) => {
+    const post = await Post.findOne({ _id: req.params.id });
+
+    if(post) {
+        res.status(200).json({
+            success: true,
+            post: post
+        })
+    } else {
+        res.status(500).json({
+            success: false,
+            msg: "False post id"
+        })
+    }
+};
+
+
+//getAll
 module.exports.getAll = async (req,res)=>{
     try{
         let post = await Post.find({});
@@ -38,7 +61,7 @@ module.exports.getAll = async (req,res)=>{
     }
 };
 
-
+//create
 module.exports.create = async (req,res) => {
 
 
@@ -64,3 +87,39 @@ module.exports.create = async (req,res) => {
     });
     res.status(201).json(post);
 };
+
+
+
+//update
+module.exports.update = async (req,res)=>{
+    const post = req.body;
+    const id = req.params.id;
+    console.log(req.body);
+    try{
+        await  Post.findByIdAndUpdate(id, req.body, {new: true}, (company)=>{
+            res.status(200).json({msg:"updated successfully a post with id = " + id});
+        })
+
+    }catch (e) {
+        res.status(500).json({msg: 'error', details: e})
+    }
+};
+
+
+
+// Post.findByIdAndUpdate(id, req.body, {new:true}, (err, company)=> {
+//     res.status(200).json({msg:"updated successfully a post with id = " + id});
+// })
+
+
+
+//delete
+module.exports.delete = async (req,res)=>{
+    const id = req.params.id + '';
+    try{
+        await  Post.findByIdAndDelete({_id: id});
+        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
+    }catch (e) {
+        res.status(500).json({msg:'error', delete: e})
+    }
+}
