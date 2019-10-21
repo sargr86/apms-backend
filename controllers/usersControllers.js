@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const http = require('http');
 const to = require('../helpers/getPromiseResult');
-const bcrypt = require('bcryptjs');
 const Roles = require('../models/roles');
 
 
@@ -32,6 +31,21 @@ const {validationResult} = require('express-validator');
 //         res.status(500).json(e)
 //     }
 // };
+//getOne
+
+exports.getOne= async (req,res)=>{
+    try{
+        let post = await Users.find({});
+        res.status(200).json({
+            success: true,
+            posts: post
+        })
+    }catch (e) {
+        res.status(500).json({
+            error:e
+        })
+    }
+};
 
 exports.addUsers = async (req, res) => {
     let data = req.body;
@@ -80,7 +94,6 @@ exports.addUsers = async (req, res) => {
             //     }
             //     res.json("sent");
             // });
-
         } else {
             res.status(204).send("")
         }
@@ -96,12 +109,59 @@ exports.addUsers = async (req, res) => {
 };
 
 
+
 exports.getUsers = async (req, res) => {
     let users = await to(Users.find());
-    res.json(users);
+    res.status(200).json({
+        success: true,
+        posts: post
+    });
 };
 
 
+
+
+
+// update
+exports.update = async (req,res) =>{
+    const post = req.body;
+    const id = req.params.id;
+    try{
+        await Users.findByIdAndUpdate(id,req.body,{new: true}, (Users)=>{
+            req.status(200).json({msg:"updated successfully a post with id = " + id})
+        })
+    }catch (e) {
+        res.status(500).json({msg:'error', details: e})
+    }
+};
+
+
+
+
+//delete
+exports.delete = async (req,res) =>{
+    const id = req.params.id + '';
+    try{
+        await Users.finByIdAndDelete({_id: id});
+        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id});
+    }catch (e) {
+       res.status(500).json({msg:'error', delete: e})
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+// Role
+///////////////////////////////////////////ROLE//////////////////////////////
 exports.addRole = async (req,res)=>{
     const roles = await to(Roles.create(req.body))
 };
@@ -110,6 +170,71 @@ exports.getRoles = async (req,res)=>{
     const roles = await to(Roles.find())
     res.json(roles);
 };
+
+
+
+
+
+
+// getOne
+
+exports.getOneRoles = async (req,res)=>{
+    console.log(req.params.id);
+    const  post = await Roles.findOne({_id: req.params.id});
+  if(post){
+         res.status(200).json({
+           success: true,
+            post: post
+        });
+  }else{
+       res.status(500).json({
+           success: false,
+           msg: 'False post id'
+        })
+   }
+};
+
+//update
+exports.update = async(req,res)=>{
+        const post = req.body;
+        const id = req.params.id;
+        try{
+            await Roles.findByIdAndUpdate(id, req.body,{new: true},(roles)=>{
+                res.status(200).json({msg:"updated successfully a post with id = " + id})
+            })
+        }catch (e) {
+            res.status(500).json({msg:'error', details: e})
+        }
+}
+
+
+
+
+//delete
+exports.delete = async(req,res)=>{
+    const id = req.params.id + '';
+    try{
+        await Roles.finByIdAndDelete({_id: id});
+        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
+    }catch (e) {
+        res.status(500).json({msg:'error', delete: e})
+    }
+};
+
+// // delete
+// exports.delete = async (req,res)=>{
+//     const id  = req.params.id + '';
+//     try{
+//         await  Post.finByIdAndDelete({_id: id});
+//         res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
+//     }catch (e) {
+//         res.status(500).json({msg:'error', delete: e})
+//     }
+// };
+
+
+
+
 
 // router.post('/forgotEmail/code',  (req, res) => {
 //     // exports.addUsers=  async (req, res) => {
@@ -120,6 +245,7 @@ exports.getRoles = async (req,res)=>{
 //
 //
 // });
+
 
 
 
