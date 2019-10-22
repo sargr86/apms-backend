@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const usersControllers = require('../controllers/usersControllers');
+// const usersControllers = require('../controllers/usersControllers');
+const rolesController= require('../controllers/rolesController');
 
 
 
-router.post('/add',  usersControllers.addRole);
-router.get('/get',  usersControllers.getRoles);
-router.get('/get/:id', usersControllers.getOneRoles);
-router.put('/update/:id', usersControllers.update);
-router.delete('/delete/:id', usersControllers.delete);
+router.post('/add',  rolesController.addRole);
+router.get('/get',  rolesController.getRoles);
+router.get('/get/:id', rolesController.getOneRoles);
+router.put('/update/:id', rolesController.update);
+router.delete('/delete/:id', rolesController.delete);
 
 
 

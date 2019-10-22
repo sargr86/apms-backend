@@ -7,8 +7,6 @@ const validateCompany = require('../validators/validateCompany');
 
 
 
-
-
 router.get('/', companyController.getAll);
 router.get('/:id', companyController.getOne);
 router.put('/:id', companyController.update);

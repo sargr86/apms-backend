@@ -1,4 +1,4 @@
-const Post = require('../models/company');
+const Company = require('../models/company');
 const http = require('http');
 
 
@@ -29,12 +29,12 @@ const {validationResult} = require('express-validator');
 
 //getOne
 module.exports.getOne = async (req, res) => {
-    const post = await Post.findOne({ _id: req.params.id });
+    const company = await Company.findOne({ _id: req.params.id });
 
-    if(post) {
+    if(company) {
         res.status(200).json({
             success: true,
-            post: post
+            company: company
         })
     } else {
         res.status(500).json({
@@ -48,10 +48,10 @@ module.exports.getOne = async (req, res) => {
 //getAll
 module.exports.getAll = async (req,res)=>{
     try{
-        let post = await Post.find({});
+        let companies = await Company.find({});
         res.status(200).json({
             success: true,
-            posts:post
+            companies
         })
     }
     catch (e) {
@@ -78,26 +78,28 @@ module.exports.create = async (req,res) => {
     }
 
 
-    let post = await Post.create({
+    let company = await Company.create({
         companyName: req.body.companyName,
         number: req.body.number,
         fax: req.body.fax,
         city: req.body.city,
         address: req.body.address,
     });
-    res.status(201).json(post);
+    // res.status(201).json(post);
+    // res.status(201);
+    res.status(200).json({msg:"new company is added"})
 };
 
 
 
 //update
 module.exports.update = async (req,res)=>{
-    const post = req.body;
+    const company = req.body;
     const id = req.params.id;
     console.log(req.body);
     try{
-        await  Post.findByIdAndUpdate(id, req.body, {new: true}, (company)=>{
-            res.status(200).json({msg:"updated successfully a post with id = " + id});
+        await  Company.findByIdAndUpdate(id, req.body, {new: true}, (company)=>{
+            res.status(200).json({msg:"the company details are updated successfully"});
         })
 
     }catch (e) {
@@ -117,8 +119,8 @@ module.exports.update = async (req,res)=>{
 module.exports.delete = async (req,res)=>{
     const id = req.params.id + '';
     try{
-        await  Post.findByIdAndDelete({_id: id});
-        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
+        await  Company.findByIdAndDelete({_id: id});
+        res.status(200).json({msg:'deleted successfully'})
     }catch (e) {
         res.status(500).json({msg:'error', delete: e})
     }

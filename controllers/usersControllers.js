@@ -35,10 +35,10 @@ const {validationResult} = require('express-validator');
 
 exports.getOne= async (req,res)=>{
     try{
-        let post = await Users.find({});
+        let user = await Users.find({_id: req.params.id});
         res.status(200).json({
             success: true,
-            posts: post
+            user
         })
     }catch (e) {
         res.status(500).json({
@@ -104,18 +104,15 @@ exports.addUsers = async (req, res) => {
     await to(Users.create(data), res);
 
     // res.json("OK");
-    res.status(201).json({success: true})
+    res.status(201).json({msg:'The user is added successfully',success: true})
     // }
 };
 
 
 
 exports.getUsers = async (req, res) => {
-    let users = await to(Users.find());
-    res.status(200).json({
-        success: true,
-        posts: post
-    });
+    let user = await to(Users.find());
+    res.json(user);
 };
 
 
@@ -127,8 +124,8 @@ exports.update = async (req,res) =>{
     const post = req.body;
     const id = req.params.id;
     try{
-        await Users.findByIdAndUpdate(id,req.body,{new: true}, (Users)=>{
-            req.status(200).json({msg:"updated successfully a post with id = " + id})
+        await Users.findByIdAndUpdate(id,req.body,{new: true}, ()=>{
+            res.status(200).json({msg:"updated successfully a post with id = "})
         })
     }catch (e) {
         res.status(500).json({msg:'error', details: e})
@@ -141,9 +138,10 @@ exports.update = async (req,res) =>{
 //delete
 exports.delete = async (req,res) =>{
     const id = req.params.id + '';
+    console.log(req.params);
     try{
-        await Users.finByIdAndDelete({_id: id});
-        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id});
+        await Users.findByIdAndDelete({_id: id});
+        res.status(200).json({msg:'deleted suscess fully a post with id = '});
     }catch (e) {
        res.status(500).json({msg:'error', delete: e})
     }
@@ -160,91 +158,12 @@ exports.delete = async (req,res) =>{
 
 
 
-// Role
-///////////////////////////////////////////ROLE//////////////////////////////
-exports.addRole = async (req,res)=>{
-    const roles = await to(Roles.create(req.body))
-};
-
-exports.getRoles = async (req,res)=>{
-    const roles = await to(Roles.find())
-    res.json(roles);
-};
 
 
 
 
 
 
-// getOne
-
-exports.getOneRoles = async (req,res)=>{
-    console.log(req.params.id);
-    const  post = await Roles.findOne({_id: req.params.id});
-  if(post){
-         res.status(200).json({
-           success: true,
-            post: post
-        });
-  }else{
-       res.status(500).json({
-           success: false,
-           msg: 'False post id'
-        })
-   }
-};
-
-//update
-exports.update = async(req,res)=>{
-        const post = req.body;
-        const id = req.params.id;
-        try{
-            await Roles.findByIdAndUpdate(id, req.body,{new: true},(roles)=>{
-                res.status(200).json({msg:"updated successfully a post with id = " + id})
-            })
-        }catch (e) {
-            res.status(500).json({msg:'error', details: e})
-        }
-}
-
-
-
-
-//delete
-exports.delete = async(req,res)=>{
-    const id = req.params.id + '';
-    try{
-        await Roles.finByIdAndDelete({_id: id});
-        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
-    }catch (e) {
-        res.status(500).json({msg:'error', delete: e})
-    }
-};
-
-// // delete
-// exports.delete = async (req,res)=>{
-//     const id  = req.params.id + '';
-//     try{
-//         await  Post.finByIdAndDelete({_id: id});
-//         res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
-//     }catch (e) {
-//         res.status(500).json({msg:'error', delete: e})
-//     }
-// };
-
-
-
-
-
-// router.post('/forgotEmail/code',  (req, res) => {
-//     // exports.addUsers=  async (req, res) => {
-//     //
-//     // }
-//     let email = req.body.email;
-//
-//
-//
-// });
 
 
 
