@@ -1,14 +1,12 @@
 const Company = require('../models/company');
-const http = require('http');
+// const to = require('../helpers/getPromiseResult');
+const getErrors = require('../helpers/getValidatorErrors');
 
+const http = require('http');
 
 
 // Express Validator
 const {validationResult} = require('express-validator');
-
-
-
-
 
 
 //CREATE
@@ -24,14 +22,11 @@ const {validationResult} = require('express-validator');
 // }
 
 
-
-
-
 //getOne
 module.exports.getOne = async (req, res) => {
-    const company = await Company.findOne({ _id: req.params.id });
+    const company = await Company.findOne({_id: req.params.id});
 
-    if(company) {
+    if (company) {
         res.status(200).json({
             success: true,
             company: company
@@ -46,15 +41,14 @@ module.exports.getOne = async (req, res) => {
 
 
 //getAll
-module.exports.getAll = async (req,res)=>{
-    try{
+module.exports.getAll = async (req, res) => {
+    try {
         let companies = await Company.find({});
         res.status(200).json({
             success: true,
             companies
         })
-    }
-    catch (e) {
+    } catch (e) {
         res.status(500).json({
             error: e
         })
@@ -62,10 +56,11 @@ module.exports.getAll = async (req,res)=>{
 };
 
 //create
-module.exports.create = async (req,res) => {
-
+module.exports.create = async (req, res) => {
+    let data = req.body;
 
     // Getting validation result from express-validator
+    // if(!getErrors())
     const errors = validationResult(req);
 
     // Handling database connection error
@@ -87,25 +82,122 @@ module.exports.create = async (req,res) => {
     });
     // res.status(201).json(post);
     // res.status(201);
-    res.status(200).json({msg:"new company is added"})
+    res.status(200).json({msg: "new company is added"})
 };
-
 
 
 //update
-module.exports.update = async (req,res)=>{
-    const company = req.body;
-    const id = req.params.id;
-    console.log(req.body);
-    try{
-        await  Company.findByIdAndUpdate(id, req.body, {new: true}, (company)=>{
-            res.status(200).json({msg:"the company details are updated successfully"});
-        })
+// module.exports.update = async (req,res)=>{
+//     const company = req.body;
+//     const id = req.params.id;
+//     console.log(req.body);
+//     try{
+//         if(!getErrors(req,res)){
+//             await  Company.findByIdAndUpdate(id, req.body, {new: true}, ()=>{
+//                 res.status(200).json({msg:"the company details are updated successfully"});
+//             })
+//         }
+//     }catch (e) {
+//         res.status(500).json({msg: 'error', details: e})
+//     }
+// };
 
-    }catch (e) {
+//update
+// module.exports.update = async (req, res) => {
+//     const company = req.body[0];
+//     const id = req.params.id;
+//     console.log(req.body);
+//     try {
+//         if (!getErrors(req, res)) {
+//
+//             await Company.findByIdAndUpdate(id, req.body, {new: true}, () => {
+//                 res.status(200).json({msg: "the user details are updated successfully"})
+//             })
+//         }
+//     } catch (e) {
+//         res.status(500).json({msg: 'error', details: e})
+//     }
+// }
+
+////////////////////////////////////////////////
+
+// module.exports.update = async (req, res) => {
+//     const company = req.body;
+//     const id = req.params.id;
+//     try {
+//         if (!getErrors(req, res)) {
+//
+//             let company = await Company.findOne({_id: req.params.id});
+//             console.log(company)
+//             await company.save();
+//             console.log('aaa');
+//             res.status(200).json({msg: "the company details are updated successfully"})
+//         }
+//     } catch (e) {
+//         res.status(500).json({msg: 'error', details: e})
+//     }
+// };
+//
+
+
+// module.exports.update = async (req, res) => {
+//     const company = req.body;
+//     const id = req.params.id;
+//     try {
+//         if (!getErrors(req, res)) {
+//
+//             await Company.findByIdAndUpdate(id, req.body, {new: true}, (company) => {
+//                 res.status(200).json({msg: "the user details are updated successfully"})
+//             })
+//         }
+//     } catch (e) {
+//         res.status(500).json({msg: 'error', details: e})
+//     }
+// };
+
+
+exports.update = async (req, res) => {
+    const company = req.body;
+    delete company._id;
+    const id = req.params.id;
+    try {
+
+
+
+
+        if (!getErrors(req, res)) {
+            console.log(req.body)
+            await Company.findByIdAndUpdate(id, company, {new: true, useFindAndModify: false}, () => {
+                if (!res.headersSent) {
+                    res.status(200).json({msg: "the user details are updated successfully"})
+                }
+            })
+
+        }
+
+
+    } catch (e) {
+        // console.log({msg: 'error', details: e});
         res.status(500).json({msg: 'error', details: e})
     }
 };
+
+
+// exports.update = async (req, res) => {
+//     const user = req.body;
+//     const id = req.params.id;
+//     try {
+//         await Users1.findByIdAndUpdate(id, req.body, {new: true}, () => {
+//             res.status(200).json({msg: "the user details are updated successfully"})
+//         // if (!getErrors(req, res)) {
+//         //
+//         //
+//             })
+//         // }
+//     } catch (e) {
+//         res.status(500).json({msg: 'error', details: e})
+//     }
+// };
 
 
 
@@ -115,13 +207,19 @@ module.exports.update = async (req,res)=>{
 
 
 
+
+
+
+
+
+
 //delete
-module.exports.delete = async (req,res)=>{
+module.exports.delete = async (req, res) => {
     const id = req.params.id + '';
-    try{
-        await  Company.findByIdAndDelete({_id: id});
-        res.status(200).json({msg:'deleted successfully'})
-    }catch (e) {
-        res.status(500).json({msg:'error', delete: e})
+    try {
+        await Company.findByIdAndDelete({_id: id});
+        res.status(200).json({msg: 'deleted successfully',data:this.getAll()})
+    } catch (e) {
+        res.status(500).json({msg: 'error', delete: e})
     }
 }

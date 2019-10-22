@@ -36,15 +36,32 @@ exports.getOneRoles = async (req,res)=>{
 };
 
 //update
-exports.update = async(req,res)=>{
-    const post = req.body;
+// exports.update = async(req,res)=>{
+//     const id = req.params.id;
+//     try{
+//         await Roles.findByIdAndUpdate(id, req.body,{new: true},(roles)=>{
+//             // res.status(200).json({msg:"updated successfully a post with id = " + id})
+//             res.status(200).json({msg:"the company details are updated successfully"})
+//             // the company details are updated successfully
+//         })
+//     }catch (e) {
+//         res.status(500).json({msg:'error', details: e})
+//     }
+// };
+
+
+exports.update = async (req, res) => {
+    const user = req.body;
     const id = req.params.id;
-    try{
-        await Roles.findByIdAndUpdate(id, req.body,{new: true},(roles)=>{
-            res.status(200).json({msg:"updated successfully a post with id = " + id})
-        })
-    }catch (e) {
-        res.status(500).json({msg:'error', details: e})
+    try {
+        if (!getErrors(req, res)) {
+
+            await Users.findByIdAndUpdate(id, req.body, {new: true}, () => {
+                res.status(200).json({msg: "the user details are updated successfully"})
+            })
+        }
+    } catch (e) {
+        res.status(500).json({msg: 'error', details: e})
     }
 };
 
@@ -54,7 +71,7 @@ exports.delete = async(req,res)=>{
     const id = req.params.id + '';
     try{
         await Roles.finByIdAndDelete({_id: id});
-        res.status(200).json({msg:'deleted suscess fully a post with id = ' + id})
+        res.status(200).json({msg:'the user details are deleted successfully'})
     }catch (e) {
         res.status(500).json({msg:'error', delete: e})
     }
