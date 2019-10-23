@@ -161,15 +161,14 @@ exports.update = async (req, res) => {
     delete company._id;
     const id = req.params.id;
     console.log('aaa')
-            console.log(req.body)
+    console.log(req.body)
     try {
-
 
 
         if (!getErrors(req, res)) {
             await Company.findByIdAndUpdate(id, company, {new: true, useFindAndModify: false}, () => {
                 if (!res.headersSent) {
-                    res.status(200).json({msg: "the user details are updated successfully"})
+                    res.status(200).json({msg: "the company details are updated successfully"})
                 }
             })
 
@@ -200,17 +199,9 @@ exports.update = async (req, res) => {
 // };
 
 
-
 // Post.findByIdAndUpdate(id, req.body, {new:true}, (err, company)=> {
 //     res.status(200).json({msg:"updated successfully a post with id = " + id});
 // })
-
-
-
-
-
-
-
 
 
 //delete
@@ -218,7 +209,7 @@ module.exports.delete = async (req, res) => {
     const id = req.params.id + '';
     try {
         await Company.findByIdAndDelete({_id: id});
-        this.getAll(req,res);
+        this.getAll(req, res);
     } catch (e) {
         res.status(500).json({msg: 'error', delete: e})
     }
