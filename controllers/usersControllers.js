@@ -131,7 +131,7 @@ exports.delete = async (req, res) => {
     console.log(req.params);
     try {
         await Users.findByIdAndDelete({_id: id});
-        res.status(200).json({msg: 'deleted successfully',data:this.getAll()});
+        this.getUsers(req,res);
     } catch (e) {
         res.status(500).json({msg: 'error', delete: e})
     }
