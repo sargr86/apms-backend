@@ -18,11 +18,13 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+
 // Routes
 app.use('/auth', require('./routes/auth'));
 app.use('/company', require('./routes/company'));
 app.use('/users', require('./routes/users'));
 app.use('/roles', require('./routes/roles'));
+app.use('/CompanyUser', require('./routes/CompanyUser'));
 
 
 const mongoose = require('mongoose');

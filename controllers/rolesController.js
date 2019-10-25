@@ -13,7 +13,7 @@ exports.addRole = async (req,res)=>{
 };
 
 exports.getRoles = async (req,res)=>{
-    const roles = await to(Roles.find())
+    const roles = await to(Roles.find());
     res.json(roles);
 };
 
@@ -79,7 +79,7 @@ exports.delete = async(req,res)=>{
 
 
 
-
+/////////////////
 
 
 

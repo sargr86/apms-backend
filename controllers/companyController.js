@@ -86,75 +86,6 @@ module.exports.create = async (req, res) => {
 };
 
 
-//update
-// module.exports.update = async (req,res)=>{
-//     const company = req.body;
-//     const id = req.params.id;
-//     console.log(req.body);
-//     try{
-//         if(!getErrors(req,res)){
-//             await  Company.findByIdAndUpdate(id, req.body, {new: true}, ()=>{
-//                 res.status(200).json({msg:"the company details are updated successfully"});
-//             })
-//         }
-//     }catch (e) {
-//         res.status(500).json({msg: 'error', details: e})
-//     }
-// };
-
-//update
-// module.exports.update = async (req, res) => {
-//     const company = req.body[0];
-//     const id = req.params.id;
-//     console.log(req.body);
-//     try {
-//         if (!getErrors(req, res)) {
-//
-//             await Company.findByIdAndUpdate(id, req.body, {new: true}, () => {
-//                 res.status(200).json({msg: "the user details are updated successfully"})
-//             })
-//         }
-//     } catch (e) {
-//         res.status(500).json({msg: 'error', details: e})
-//     }
-// }
-
-////////////////////////////////////////////////
-
-// module.exports.update = async (req, res) => {
-//     const company = req.body;
-//     const id = req.params.id;
-//     try {
-//         if (!getErrors(req, res)) {
-//
-//             let company = await Company.findOne({_id: req.params.id});
-//             console.log(company)
-//             await company.save();
-//             console.log('aaa');
-//             res.status(200).json({msg: "the company details are updated successfully"})
-//         }
-//     } catch (e) {
-//         res.status(500).json({msg: 'error', details: e})
-//     }
-// };
-//
-
-
-// module.exports.update = async (req, res) => {
-//     const company = req.body;
-//     const id = req.params.id;
-//     try {
-//         if (!getErrors(req, res)) {
-//
-//             await Company.findByIdAndUpdate(id, req.body, {new: true}, (company) => {
-//                 res.status(200).json({msg: "the user details are updated successfully"})
-//             })
-//         }
-//     } catch (e) {
-//         res.status(500).json({msg: 'error', details: e})
-//     }
-// };
-
 
 exports.update = async (req, res) => {
     const company = req.body;
@@ -181,22 +112,6 @@ exports.update = async (req, res) => {
     }
 };
 
-
-// exports.update = async (req, res) => {
-//     const user = req.body;
-//     const id = req.params.id;
-//     try {
-//         await Users1.findByIdAndUpdate(id, req.body, {new: true}, () => {
-//             res.status(200).json({msg: "the user details are updated successfully"})
-//         // if (!getErrors(req, res)) {
-//         //
-//         //
-//             })
-//         // }
-//     } catch (e) {
-//         res.status(500).json({msg: 'error', details: e})
-//     }
-// };
 
 
 // Post.findByIdAndUpdate(id, req.body, {new:true}, (err, company)=> {
